@@ -1,18 +1,47 @@
-from extensions import db
-from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
+from django.db import models
+from django.contrib.auth.models import User
+import datetime
 
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password_hash = db.Column(db.String(200), nullable=False)
+# Flight Model
+class Flight(models.Model):
+    flight_number = models.CharField(max_length=10)
+    from_city = models.CharField(max_length=100)
+    to_city = models.CharField(max_length=100)
+    depart_date = models.DateField(default=datetime.date.today)
+    return_date = models.DateField(blank=True, null=True)
+    price = models.FloatField()
 
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
+    def __str__(self):
+        return f"{self.flight_number}: {self.from_city} → {self.to_city}"
 
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+# Hotel Model
+class Hotel(models.Model):
+    name = models.CharField(max_length=200)
+    city = models.CharField(max_length=100)
+    address = models.TextField()
+    price_per_night = models.FloatField()
+    rating = models.FloatField(default=0)
 
-    def __repr__(self):
-        return f"<User {self.username}>"
+    def __str__(self):
+        return f"{self.name} - {self.city}"
+
+# Booking Model
+class Booking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    flight = models.ForeignKey(Flight, on_delete=models.SET_NULL, null=True, blank=True)
+    hotel = models.ForeignKey(Hotel, on_delete=models.SET_NULL, null=True, blank=True)
+    booking_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=(('Confirmed', 'Confirmed'), ('Pending', 'Pending')))
+
+    def __str__(self):
+        return f"Booking {self.id} - {self.user.username}"
+
+# Optional: Passenger details for flights
+class Passenger(models.Model):
+    booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=200)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.full_name

@@ -1,0 +1,21 @@
+{% extends 'maketrip/base.html' %}
+
+{% block title %}Search Results | MakeTrip{% endblock %}
+
+{% block content %}
+<h2>Search Results from {{ from_city }} to {{ to_city }}</h2>
+<p>Departure: {{ depart }} | Return: {{ return_date|default:"N/A" }}</p>
+
+<div class="section" style="display: flex; gap: 20px; flex-wrap: wrap;">
+    {% for r in results %}
+        <div class="card">
+            <h3>{{ r.type }}: {{ r.name }}</h3>
+            <p>Price: {{ r.price }}</p>
+        </div>
+    {% empty %}
+        <p>No results found.</p>
+    {% endfor %}
+</div>
+
+<a href="{% url 'home' %}" class="button">Back to Home</a>
+{% endblock %}

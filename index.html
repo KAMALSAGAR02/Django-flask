@@ -1,0 +1,109 @@
+{% extends 'maketrip/base.html' %}
+
+{% block title %}Home | MakeTrip{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section with Search -->
+<div class="hero">
+    <h1>Plan Your Perfect Trip</h1>
+    <p>Flights, Hotels & Trains at your fingertips</p>
+
+    <form action="/search" method="GET" style="margin-top: 20px;">
+        <input type="text" name="from" placeholder="From" required>
+        <input type="text" name="to" placeholder="To" required>
+        <input type="date" name="depart" required>
+        <input type="date" name="return">
+        <button type="submit" class="button">Search</button>
+    </form>
+</div>
+
+<!-- Cards Section -->
+<div class="section" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-around;">
+
+    <div class="card">
+        <h3>Flights</h3>
+        <p>Find the best deals on domestic and international flights.</p>
+        <a href="/flights" class="button">Search Flights</a>
+    </div>
+
+    <div class="card">
+        <h3>Hotels</h3>
+        <p>Comfortable stays at your favorite destinations.</p>
+        <a href="/hotels" class="button">Book Hotels</a>
+    </div>
+
+    <div class="card">
+        <h3>Trains</h3>
+        <p>Reliable train bookings across the country.</p>
+        <a href="/trains" class="button">Book Trains</a>
+    </div>
+
+</div>
+
+<style>
+.hero {
+    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+    background-size: cover;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero input[type="text"],
+.hero input[type="date"] {
+    padding: 8px;
+    margin: 5px;
+    border-radius: 4px;
+    border: none;
+}
+
+.hero button {
+    margin-left: 5px;
+    padding: 8px 15px;
+    background-color: #ff6b6b;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.hero button:hover {
+    background-color: #ff3b3b;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.card .button {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #0d6efd;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+}
+
+.card .button:hover {
+    background-color: #0b5ed7;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'maketrip/base.html' %}
+{% block content %}
+<h2>Available Flights</h2>
+<table>
+  <tr>
+    <th>Flight Number</th>
+    <th>From</th>
+    <th>To</th>
+    <th>Date</th>
+    <th>Price</th>
+  </tr>
+  {% for flight in flights %}
+  <tr>
+    <td>{{ flight.flight_number }}</td>
+    <td>{{ flight.from_city }}</td>
+    <td>{{ flight.to_city }}</td>
+    <td>{{ flight.depart_date }}</td>
+    <td>{{ flight.price }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
